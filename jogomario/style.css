@@ -1,0 +1,159 @@
+@font-face {
+    font-family: 'Super Mario';
+    src: url(/fontes/SuperMarioWorld.ttf);
+}
+
+@keyframes animarInimigo {
+    from {
+        right: -100px;
+    }
+    to {
+        right: 105%;
+    }
+}
+
+/*  bottom: personagem => 78px ; bloco = 270px 
+    height:         || => 70px;        || 50px*/
+@keyframes puloPersonagem {
+    0% {
+        bottom: 68px;
+    }
+    40% {
+        bottom: 220px;
+    }
+    70% {
+        bottom: 220px;
+    }
+    100% {
+        bottom: 68px;
+    }
+}
+
+.puloPersonagem{
+    animation: puloPersonagem 500ms ease-out;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-family: 'Super Mario';
+    font-size: 25px;
+    color: #ffdf73;
+}
+
+.background{
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 0 0;
+}
+
+#cenario-ceu, #cenario{
+    width: 100vw;
+    height: 100vh;
+    background-repeat:none;
+    background-size: cover;
+    background-position: 0 0;
+    overflow: hidden;
+}
+
+#cenario-ceu{
+    background-image: url(/imagens/cenarioceu.png) ;
+    position: absolute;
+}
+
+#cenario{
+    background-image: url(/imagens/cenario.png);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+
+}
+
+#img-menu{
+    width: 100vw;
+    max-width: 1000px;
+    height: 150px;
+    margin-top: 10px;
+    background-image: url(/imagens/menuDoJogo.png);
+    position: relative;
+}
+
+#pontuacoes{
+    width: 85%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    bottom: 10px;
+    position: absolute;
+
+}
+
+#pontos-vidas, #tempo-moedas{
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#pontos-vidas{
+    min-width: 190px;
+    margin-top: 30px;
+    padding-left: 30px;
+    display: flex;
+    gap: 110px;
+}
+
+#personagem, #inimigo{
+    position: absolute;
+    width: 50px; 
+    bottom: 68px;
+}
+
+#personagem{
+    height: 70px;
+    background-image: url(/imagens/marioParadoLadoDireito.png);
+    left: 0;
+
+}
+
+#inimigo{
+    height: 62px;
+    background-image: url(/imagens/inimigoLadoEsquerdo.gif);
+    right: 0;
+    animation: animarInimigo 15s infinite linear;
+}
+
+#bloco{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url(/imagens/bloco.png);
+    right: 35%;
+    bottom: 270px;
+}
+
+#tela-reiniciar{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.329);
+}
+
+#button-continuar, #button-reiniciar{
+    position: relative;
+    width: 350px;
+    height: 70px;
+    text-transform: capitalize;
+    background-color: white;
+    cursor: pointer;
+}
+

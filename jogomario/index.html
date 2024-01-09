@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js" async></script>
+</head>
+<body>
+    <div id="cenario-ceu" ></div>
+    <div id="cenario" >
+
+        <div id="menu-jogo">
+            <div id="img-menu" class="background">
+                <div id="pontuacoes">
+                    <div id="pontos-vidas">
+                        <div id="pontos">0</div>
+                        <div id="vidas">5</div>
+                    </div>
+    
+                    <div id="tempo-moedas">
+                        <div id="tempo">400</div>
+                        <div id="moedas">0</div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+        
+
+        <div id="personagem" class="background"></div>
+        <div id="inimigo" class="background"></div>
+        <div id="bloco" class="background"></div>
+
+        <div id="tela-reiniciar">
+            <button type="button" id="button-continuar" onclick="continuarPartida()">Continuar</button>
+            <button type="button" id="button-reiniciar" onclick="reiniciarPartida()">reiniciar Jogo</button>
+        </div>
+    </div>
+</body>
+</html>

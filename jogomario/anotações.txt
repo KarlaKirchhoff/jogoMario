@@ -1,0 +1,84 @@
+* capturar teclas ativas e soltas
+* atualizar movimento
+* atualizar imagens e animações de acordo com a direção do personagem
+* limitar movimentos horizontais
+* animar 'inimigo' no css
+* add pulo ao Mario no js e css - add classe para pulo do personagem
+* criar variaveis de moedas as moedas e os pontos
+* criar colisão do personagem com o bloco
+* criar pontuação de colisão
+* configurar cronômetro 
+* congelar partida quando o tempo esgota (remover todos es eventos e animações)
+* colisão com inimigo
+* ajustar delay do pulo
+* Karla - resolver bug 'travar movimentos'
+* Armazenar pontuações no 'storage'
+
+-----------------------------------------------------
+//alert("Tecla pressionada: " + event.key)
+const checarBloco = bloco.getBoundingClientRect()
+
+-------------------------------------------------------------
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowRight"){
+        direcao = +1
+        posicao += direcao * velocidade
+        personagem.style.left = posicao + "px"
+    } else if (event.key === "ArrowLeft") {
+        direcao = -1
+        posicao += direcao * velocidade
+        personagem.style.left = posicao + "px"
+    }
+})
+
+document.addEventListener("keydown", function (event) {
+    switch (event.key){
+        case "ArrowRight" :
+        direcao = +1
+        posicao += direcao * velocidade
+        personagem.style.left = posicao + "px"
+        break
+
+        case "ArrowLeft":
+        direcao = -1
+        posicao += direcao * velocidade
+        personagem.style.left = posicao + "px"
+        break
+
+        default:
+            break;
+    }
+})
+
+--------------------------------------------------------------
+
+ ERROS - Karla 
+
+ function colisaoComInimigo(){  // -- Karla
+    const checarPersonagem = personagem.getBoundingClientRect()
+    const checarInimigo = inimigo.getBoundingClientRect()
+
+    if(
+        checarInimigo.left < checarPersonagem.right &&
+        checarInimigo.right > checarPersonagem.left &&
+        checarInimigo.top < checarPersonagem.bottom &&
+        checarInimigo.bottom > checarPersonagem.top
+    ) {
+        if(vidasAtual > 1){ // o mínimo pra jogar é 1 vida
+            //animação perdendo vida
+            clearInterval(colisaoComInimigo)
+            vidasAtual--
+            vidas.textContent = vidasAtual
+
+            setTimeout(() => {
+                checarColisaoComInimigo = setInterval(colisaoComInimigo, 6000)
+            })
+        } else if (vidasAtual === 1){ //se colidir com 1 vida morre
+            vidasAtual--
+            vidas.textContent = vidasAtual
+            gameOver()
+        }
+        //add efeito do cogumelo
+    }
+ }
