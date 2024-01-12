@@ -39,10 +39,22 @@ let checarCronometro
 /* ----------  Fim Declaração de Variáveis ---------------  */
 
 
+iniciarPartida()
+// reiniciarPartida()
 
-function continuarPartida(){
-    telaReiniciar.style.display = "none"
+function iniciarPartida(){
+    document.addEventListener("keydown", teclaPressionada)
+    document.addEventListener("keyup", teclaSolta) //keyup = tecla solta
+    checarMovimento = setInterval(atualizarMovimento, 50) //Faz a verificação do evento a cada 50 milésimos de segundo
+    checarColisaoComBloco = setInterval(colisaoComBloco,10)
+    checarCronometro = setInterval(cronometro, 1000)
+    checarColisaoComInimigo = setInterval(colisaoComInimigo, 50)
 }
+
+botaoContinuar.addEventListener("click", () => {
+    iniciarPartida()
+    telaReiniciar.style.display = "none"
+})
 
 function reiniciarPartida(){
     moedasAtual = 0
@@ -55,8 +67,13 @@ function reiniciarPartida(){
     vidasAtual.textContent = vidasAtual
     localStorage.setItem("vidasAtual", vidasAtual)
     // vazio
+    
     location.reload()
 }
+
+botaoReiniciar.addEventListener("click", () => {
+    reiniciarPartida()
+})
 
 function teclaPressionada(event){
     if(event.key === "ArrowRight"){
@@ -70,7 +87,7 @@ function teclaPressionada(event){
             personagem.style.backgroundImage = "url(imagens/marioMorto.gif)"
         }
 
-    } else if (event.code === "Space") {
+    } else if ((event.code === "Space") || event.key === "ArrowUp") {
         personagem.classList.add("puloPersonagem")
         // Não remover o pulo na função 'teclaSolta' porque assim que soltarmos a tecla a animação pode não ser concluída
         //usar 'setTimeout'
@@ -86,7 +103,7 @@ function teclaPressionada(event){
         }
 
     } else if (event.key === "Enter"){
-        telaReiniciar.style.display = "flex"
+        pausarJogo()
     }
 }
 
@@ -173,12 +190,7 @@ function colisaoComInimigo(){  // -- Karla
 
         let ativarTimeout = true
 
-        while (ativarTimeout){
-            clearTimeout(checarMovimento)
-            clearTimeout(checarPulo)
-            clearInterval(checarColisaoComInimigo)
-            ativarTimeout = false
-        }
+        pausarMovimentos()
         
         vidasAtual--;
         vidas.textContent = vidasAtual
@@ -198,7 +210,14 @@ function gameOver(){ // -- Karla
     clearInterval(checarCronometro)
     inimigo.style.display = "none"
 
-    setTimeout(reiniciarPartida(), 2000)
+    pausarMovimentos()
+    telaReiniciar.style.display = "flex"
+    botaoContinuar.style.display = "none"
+
+    setTimeout(() => {
+        reiniciarPartida()
+        iniciarPartida()
+    }, 10000)
 
 }
 
@@ -211,6 +230,19 @@ function cronometro(){
     } else if (tempoAtual === 0){
         gameOver()
     }
+}
+
+function pausarJogo(){
+    telaReiniciar.style.display = "flex"
+    pausarMovimentos()
+    clearInterval(checarCronometro)
+}
+
+function pausarMovimentos(){
+    removerTeclas()
+    clearTimeout(checarMovimento)
+    clearTimeout(checarPulo)
+    clearInterval(checarColisaoComInimigo)
 }
 
 function removerTeclas(){
@@ -228,9 +260,3 @@ if(vidasAtual > 0){
     setInterval(addFuncoesdeTeclas, 50)
 }
 
-document.addEventListener("keydown", teclaPressionada)
-document.addEventListener("keyup", teclaSolta) //keyup = tecla solta
-checarMovimento = setInterval(atualizarMovimento, 50) //Faz a verificação do evento a cada 50 milésimos de segundo
-checarColisaoComBloco = setInterval(colisaoComBloco,10)
-checarCronometro = setInterval(cronometro, 1000)
-checarColisaoComInimigo = setInterval(colisaoComInimigo, 50)
